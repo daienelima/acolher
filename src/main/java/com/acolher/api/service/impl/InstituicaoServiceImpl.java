@@ -57,4 +57,11 @@ public class InstituicaoServiceImpl implements InstituicaoService {
 		return this.instituicaoRepository.findByCnpj(cnpj);
 		
 	}
+
+	@Override
+	public Instituicao getBysenha(String senha) {
+		log.debug("String getBysenha: {} " , senha);
+		
+		return this.instituicaoRepository.findBySenha(senha);
+	}
 }

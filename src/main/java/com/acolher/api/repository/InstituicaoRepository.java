@@ -9,4 +9,5 @@ import com.acolher.api.domain.Instituicao;
 public interface InstituicaoRepository extends JpaRepository<Instituicao, Integer> {
 
 	Instituicao findByCnpj(String cnpj);
+	Instituicao findBySenha(String senha);
 }
