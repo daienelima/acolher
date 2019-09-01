@@ -54,9 +54,6 @@ public class Endereco implements Serializable {
 
 	@Column(name = "latitude")
 	private String latitude;
-	
-	@OneToOne(mappedBy = "endereco")
-	private Usuario usuario;
 
 	public Endereco() {
 	}
