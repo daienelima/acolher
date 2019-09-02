@@ -95,8 +95,9 @@ public class InstituicaoResource {
 		Optional<Instituicao> instituicao = this.instituicaoService.findByCodigoAndSenha(alterarSenha.getCodigo(), alterarSenha.getSenhaAntiga());
 		
 		if(instituicao.isPresent()) {
-			if(alterarSenha.getNovaSenha().length()<4 || alterarSenha.getNovaSenha().isEmpty()){
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("A senha não pode ser menor que 4 caracteres!");
+			
+			if(alterarSenha.getNovaSenha().length()<4 || alterarSenha.getNovaSenha().isEmpty() || alterarSenha.getNovaSenha().contains(" ")){
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("A senha não pode ser menor que 4 caracteres ou conter espaços.");
 			}
 		}else {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Senha atual está incorreta!");
