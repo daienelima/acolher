@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acolher.api.domain.Instituicao;
+import com.acolher.api.dto.AlterarSenha;
 import com.acolher.api.service.InstituicaoService;
 
 @RestController
@@ -88,23 +88,23 @@ public class InstituicaoResource {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PutMapping(path = "/")
-	public ResponseEntity<?>alterarSenha(@RequestBody String senhaAntiga, String novaSenha){
+	@PutMapping(path = "/senha")
+	public ResponseEntity<?>alterarSenha(@RequestBody AlterarSenha alterarSenha){
 		log.debug("Request to update by senha"); 
 		
-		Instituicao instituicao = this.instituicaoService.getBysenha(senhaAntiga);
+		Optional<Instituicao> instituicao = this.instituicaoService.findByCodigoAndSenha(alterarSenha.getCodigo(), alterarSenha.getSenhaAntiga());
 		
-		if(senhaAntiga != instituicao.getSenha()) {
+		if(instituicao.isPresent()) {
+			if(alterarSenha.getNovaSenha().length()<4 || alterarSenha.getNovaSenha().isEmpty()){
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("A senha não pode ser menor que 4 caracteres!");
+			}
+		}else {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Senha atual está incorreta!");
 		}
-		if(novaSenha.length()<4 || novaSenha.isEmpty()){
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("A senha não pode ser menor que 4 caracteres!");
-			
-		}
 		
-		instituicao.setSenha(novaSenha);
+		instituicao.get().setSenha(alterarSenha.getNovaSenha());
 		
-		this.instituicaoService.save(instituicao);
+		this.instituicaoService.save(instituicao.get());
 		return ResponseEntity.ok().build();
 	
 	}

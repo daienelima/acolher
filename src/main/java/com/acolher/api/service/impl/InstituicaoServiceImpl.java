@@ -59,9 +59,9 @@ public class InstituicaoServiceImpl implements InstituicaoService {
 	}
 
 	@Override
-	public Instituicao getBysenha(String senha) {
+	public Optional<Instituicao> findByCodigoAndSenha(Integer codigo, String senha) {
 		log.debug("String getBysenha: {} " , senha);
 		
-		return this.instituicaoRepository.findBySenha(senha);
+		return this.instituicaoRepository.findByCodigoAndSenha(codigo,senha);
 	}
 }
