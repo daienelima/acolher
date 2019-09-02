@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acolher.api.domain.Instituicao;
+import com.acolher.api.dto.AlterarSenha;
 import com.acolher.api.service.InstituicaoService;
 
 @RestController
@@ -86,4 +87,28 @@ public class InstituicaoResource {
 		this.instituicaoService.delete(codigo);
 		return ResponseEntity.ok().build();
 	}
+	
+	@PutMapping(path = "/senha")
+	public ResponseEntity<?>alterarSenha(@RequestBody AlterarSenha alterarSenha){
+		log.debug("Request to update by senha"); 
+		
+		Optional<Instituicao> instituicao = this.instituicaoService.findByCodigoAndSenha(alterarSenha.getCodigo(), alterarSenha.getSenhaAntiga());
+		
+		if(instituicao.isPresent()) {
+			
+			if(alterarSenha.getNovaSenha().length()<4 || alterarSenha.getNovaSenha().isEmpty() || alterarSenha.getNovaSenha().contains(" ")){
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("A senha não pode ser menor que 4 caracteres ou conter espaços.");
+			}
+		}else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Senha atual está incorreta!");
+		}
+		
+		instituicao.get().setSenha(alterarSenha.getNovaSenha());
+		
+		this.instituicaoService.save(instituicao.get());
+		return ResponseEntity.ok().build();
+	
+	}
+	
+	
 }
