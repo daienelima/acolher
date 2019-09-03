@@ -57,7 +57,13 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 		return this.usuarioRepository.findByCpf(cpf);
 		
+	}
+	
+	@Override
+	public Optional<Usuario> findByCodigoAndSenha(Integer codigo, String senha) {
+		log.debug("String getBysenha: {} " , senha);
 
+		return this.usuarioRepository.findByCodigoAndSenha(codigo,senha);
 	}
 
 }
