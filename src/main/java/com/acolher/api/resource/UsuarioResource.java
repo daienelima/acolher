@@ -4,6 +4,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import com.acolher.api.dto.AlterarSenha;
 
 import javax.validation.Valid;
 
@@ -86,6 +87,27 @@ public class UsuarioResource {
 		}
 		this.usuarioService.delete(codigo);
 		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping(path = "/senha")
+	public ResponseEntity<?>alterarSenha(@RequestBody AlterarSenha alterarSenha){
+		log.debug("Request to update by senha"); 
+
+		Optional<Usuario> usuario = this.usuarioService.findByCodigoAndSenha(alterarSenha.getCodigo(), alterarSenha.getSenhaAntiga());
+
+		if(usuario.isPresent()) {
+			if(alterarSenha.getNovaSenha().length()<4 || alterarSenha.getNovaSenha().isEmpty() || alterarSenha.getNovaSenha().contains(" ")){
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).body("A senha não pode ser menor que 4 caracteres ou conter espaço.");
+			}
+		}else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Senha atual está incorreta!");
+		}
+
+		usuario.get().setSenha(alterarSenha.getNovaSenha());
+
+		this.usuarioService.save(usuario.get());
+		return ResponseEntity.ok().build();
+
 	}
 	
 	
