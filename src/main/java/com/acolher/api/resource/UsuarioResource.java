@@ -103,7 +103,7 @@ public class UsuarioResource {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Senha atual está incorreta!");
 		}
 
-		usuario.get().setSenha(alterarSenha.getNovaSenha());
+		usuario.get().setPassword(alterarSenha.getNovaSenha());
 
 		this.usuarioService.save(usuario.get());
 		return ResponseEntity.ok().build();
