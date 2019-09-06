@@ -24,6 +24,7 @@ public class Endereco implements Serializable {
 	private Integer codigo;
 
 	@NotNull
+	@Size(min = 8, max = 8)
 	@Column(name = "cep", nullable = false)
 	private String CEP;
 
@@ -48,10 +49,10 @@ public class Endereco implements Serializable {
 	@Column(name = "numero", nullable = false)
 	private String numero;
 
-	@Column(name = "longitude", nullable = false)
+	@Column(name = "longitude")
 	private String longitude;
 
-	@Column(name = "latitude", nullable = false)
+	@Column(name = "latitude")
 	private String latitude;
 
 	public Endereco() {
