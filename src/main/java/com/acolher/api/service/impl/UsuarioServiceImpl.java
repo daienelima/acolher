@@ -47,15 +47,22 @@ public class UsuarioServiceImpl implements UsuarioService{
 
 	@Override
 	public void delete(Integer codigo) {
-		log.debug("delete endereco {} " , codigo);
+		log.debug("delete usuario {} " , codigo);
 		
 		this.usuarioRepository.deleteById(codigo);
 	}
 	@Override
 	public Usuario getByCpf(String cpf){
-		log.debug("Instituicao getByCPF: {} " , cpf);
+		log.debug("Usuario getByCPF: {} " , cpf);
 
 		return this.usuarioRepository.findByCpf(cpf);
+		
+	}
+	@Override
+	public Usuario getByEmail(String email){
+		log.debug("Usuario findByEmail: {} " , email);
+
+		return this.usuarioRepository.getByEmail(email);
 		
 	}
 	
