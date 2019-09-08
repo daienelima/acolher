@@ -73,7 +73,7 @@ public class UsuarioResource {
 		log.debug("Request to save Usuario : {}", usuario);
 		
 		Usuario usuarioCPF = this.usuarioService.getByCpf(usuario.getCpf());
-		Usuario usuarioEmail = this.usuarioService.getByCpf(usuario.getEmail());
+		Usuario usuarioEmail = this.usuarioService.getByEmail(usuario.getEmail());
 
 		if(usuarioCPF != null) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("CPF já cadastrado");
