@@ -44,7 +44,7 @@ public class UsuarioResource {
 	
 	@GetMapping("/{codigo}")
 	public ResponseEntity<?>getById(@PathVariable(name="codigo") Integer codigo){
-		log.debug("Requst Usuario by id: {}", codigo);
+		log.debug("Requst Usuario by codigo: {}", codigo);
 	
 		Optional<Usuario> usuario = this.usuarioService.getById(codigo);
 		
