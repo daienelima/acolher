@@ -18,11 +18,10 @@ import javax.validation.constraints.Size;
 @Entity(name = "usuario")
 public class Usuario implements Serializable {
 
-	private static final long serialVersionUID = -4473912353020291828L;
-
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -4473912353020291828L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,18 +32,23 @@ public class Usuario implements Serializable {
 	@Column(name = "nomeCompleto", nullable = false)
 	private String nomeCompleto;
 
+
 	@NotEmpty(message = "Data de nascimento é obrigatório")
 	@Column(name = "dtNascimento", nullable = false)
+	@NotNull
 	private String dtNascimento;
 
+
 	@NotEmpty(message = "Email é obrigatório")
+	@NotNull
+
 	@Email
 	@Column(name = "email", nullable = false)
 	private String email;
 
 	@NotEmpty(message = "Senha é obrigatório")
 	@Size(min = 4)
-	@Column(name = "Password", nullable = false)
+	@Column(name = "password", nullable = false)
 	private String password;
 	
 	@NotNull
@@ -52,20 +56,24 @@ public class Usuario implements Serializable {
 	@JoinColumn(name = "codigo_endereco", referencedColumnName = "codigo")
     private Endereco endereco;
 
+
 	@NotEmpty(message = "Telefone é obrigatório")
-	@Column(name = "Telefone", nullable = false)
+	@NotNull
+	@Size(min = 10, max = 11)
+	@Column(name = "telefone", nullable = false)
 	private String telefone;
 	
 	@NotNull
+	@Size(min = 11, max = 11)
 	@Column(name = "cpf", nullable = false)
 	private String cpf;
 	
 	@NotNull
-	@Column(name = "CRM_CRP", nullable = false)
+	@Column(name = "CRM_CRP")
 	private String crm_crp;
 
 	@NotNull
-	@Column(name = "Ativo", nullable = false)
+	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
 	
 
