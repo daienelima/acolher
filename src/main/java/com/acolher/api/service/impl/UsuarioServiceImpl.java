@@ -62,7 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public Usuario getByEmail(String email){
 		log.debug("Usuario findByEmail: {} " , email);
 
-		return this.usuarioRepository.findByEmail(email);
+		return this.usuarioRepository.getByEmail(email);
 		
 	}
 	

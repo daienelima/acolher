@@ -13,7 +13,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 	
 	Optional<Usuario> findByCodigoAndSenha(Integer codigo, String senha);
 	
-	Usuario findByEmail(String email);
+	Usuario getByEmail(String email);
 
 }
 
