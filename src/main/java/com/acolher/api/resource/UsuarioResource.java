@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acolher.api.domain.Usuario;
@@ -42,11 +43,27 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(usuarios);
 	}
 	
-	@GetMapping("/{codigo}")
+	@RequestMapping(value = "/codigo/{codigo}", method = RequestMethod.GET)
 	public ResponseEntity<?>getById(@PathVariable(name="codigo") Integer codigo){
-		log.debug("Requst Usuario by codigo: {}", codigo);
+		log.debug("Requst Usuario by Id: {}", codigo);
 	
 		Optional<Usuario> usuario = this.usuarioService.getById(codigo);
+		
+		return  usuario!= null ?  ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();
+	}
+	@RequestMapping(value = "/cpf/{cpf}", method = RequestMethod.GET)
+	public ResponseEntity<?>getByCpf(@PathVariable(name="cpf") String cpf){
+		log.debug("Requst Usuario by cpf: {}", cpf);
+	
+		Usuario usuario = this.usuarioService.getByCpf(cpf);
+		
+		return  usuario!= null ?  ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();
+	}
+	@RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
+	public ResponseEntity<?>getByEmail(@PathVariable(name="email") String email){
+		log.debug("Requst Usuario by Id: {}", email);
+	
+		Usuario usuario = this.usuarioService.getByEmail(email);
 		
 		return  usuario!= null ?  ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();
 	}

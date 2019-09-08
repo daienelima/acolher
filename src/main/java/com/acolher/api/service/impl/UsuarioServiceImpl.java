@@ -59,7 +59,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 	}
 	@Override
-	public Usuario findByEmail(String email){
+	public Usuario getByEmail(String email){
 		log.debug("Usuario findByEmail: {} " , email);
 
 		return this.usuarioRepository.findByEmail(email);
