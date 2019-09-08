@@ -12,6 +12,6 @@ public interface UsuarioService {
 	public void delete(Integer codigo);
 	public Usuario getByCpf(String cpf);
 	public Usuario getByEmail(String email);
-	public Optional<Usuario> findByCodigoAndSenha(Integer codigo, String senha);
+	public Optional<Usuario> findByCodigoAndPassword(Integer codigo, String password);
 	
 }

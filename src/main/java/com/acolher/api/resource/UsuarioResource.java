@@ -115,7 +115,7 @@ public class UsuarioResource {
 	public ResponseEntity<?>alterarSenha(@RequestBody AlterarSenha alterarSenha){
 		log.debug("Request to update by senha"); 
 
-		Optional<Usuario> usuario = this.usuarioService.findByCodigoAndSenha(alterarSenha.getCodigo(), alterarSenha.getSenhaAntiga());
+		Optional<Usuario> usuario = this.usuarioService.findByCodigoAndPassword(alterarSenha.getCodigo(), alterarSenha.getSenhaAntiga());
 
 		if(usuario.isPresent()) {
 			if(alterarSenha.getNovaSenha().length()<4 || alterarSenha.getNovaSenha().isEmpty() || alterarSenha.getNovaSenha().contains(" ")){
