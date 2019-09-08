@@ -10,7 +10,10 @@ import com.acolher.api.domain.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
 	Usuario findByCpf(String cpf);
+	
 	Optional<Usuario> findByCodigoAndSenha(Integer codigo, String senha);
+	
+	Usuario findByEmail(String email);
 
 }
 

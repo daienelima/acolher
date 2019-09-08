@@ -55,10 +55,15 @@ public class UsuarioResource {
 	public ResponseEntity<?> save(@Valid @RequestBody Usuario usuario) throws URISyntaxException{
 		log.debug("Request to save Usuario : {}", usuario);
 		
-		Usuario usuarioExistente = this.usuarioService.getByCpf(usuario.getCpf());
+		Usuario usuarioCPF = this.usuarioService.getByCpf(usuario.getCpf());
+		Usuario usuarioEmail = this.usuarioService.getByCpf(usuario.getEmail());
 
-		if(usuarioExistente != null) {
+		if(usuarioCPF != null) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("CPF já cadastrado");
+		}
+		
+		if(usuarioEmail != null) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("E-mail já cadastrado");
 		}
 
 		Usuario usuarioSalvo = this.usuarioService.save(usuario);

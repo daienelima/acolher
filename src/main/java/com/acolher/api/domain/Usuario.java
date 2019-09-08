@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -27,19 +29,20 @@ public class Usuario implements Serializable {
 	@Column(name = "codigo", nullable = false)
 	private Integer codigo;
 	
-	@NotNull
+	@NotEmpty(message = "Nome Completo é obrigatório")
 	@Column(name = "nomeCompleto", nullable = false)
 	private String nomeCompleto;
 
-	@NotNull
+	@NotEmpty(message = "Data de nascimento é obrigatório")
 	@Column(name = "dtNascimento", nullable = false)
 	private String dtNascimento;
 
-	@NotNull
+	@NotEmpty(message = "Email é obrigatório")
+	@Email
 	@Column(name = "email", nullable = false)
 	private String email;
 
-	@NotNull
+	@NotEmpty(message = "Senha é obrigatório")
 	@Size(min = 4)
 	@Column(name = "Password", nullable = false)
 	private String password;
@@ -49,7 +52,7 @@ public class Usuario implements Serializable {
 	@JoinColumn(name = "codigo_endereco", referencedColumnName = "codigo")
     private Endereco endereco;
 
-	@NotNull
+	@NotEmpty(message = "Telefone é obrigatório")
 	@Column(name = "Telefone", nullable = false)
 	private String telefone;
 	
