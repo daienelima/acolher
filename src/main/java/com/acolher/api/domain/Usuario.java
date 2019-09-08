@@ -41,7 +41,6 @@ public class Usuario implements Serializable {
 
 	@NotEmpty(message = "Email é obrigatório")
 	@NotNull
-
 	@Email
 	@Column(name = "email", nullable = false)
 	private String email;
