@@ -60,6 +60,12 @@ public class InstituicaoResource {
 		if(instituicaoExistente != null) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("CNPJ já cadastrado");
 		}
+
+		instituicaoExistente = this.instituicaoService.getByEmail(instituicao.getEmail());
+		
+		if(instituicaoExistente != null) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body("E-mail já cadastrado");
+		}
 		
 		Instituicao instituicaoSalva = this.instituicaoService.save(instituicao);
 		

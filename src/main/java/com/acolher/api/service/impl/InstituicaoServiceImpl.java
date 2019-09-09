@@ -57,6 +57,13 @@ public class InstituicaoServiceImpl implements InstituicaoService {
 		return this.instituicaoRepository.findByCnpj(cnpj);
 		
 	}
+	
+	public Instituicao getByEmail(String email){
+		log.debug("Instituicao getByEmail: {} " , email);
+		
+		return this.instituicaoRepository.findByEmail(email);
+		
+	}
 
 	@Override
 	public Optional<Instituicao> findByCodigoAndSenha(Integer codigo, String senha) {

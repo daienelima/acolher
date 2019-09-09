@@ -12,6 +12,7 @@ public interface InstituicaoService {
 	public Instituicao save(Instituicao instituicao);
 	public void delete (Integer codigo);
 	public Instituicao getByCnpj(String cnpj);
+	public Instituicao getByEmail(String email);
 	public Optional<Instituicao> findByCodigoAndSenha(Integer codigo, String senha);
 	
 }
