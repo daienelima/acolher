@@ -4,7 +4,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import com.acolher.api.dto.AlterarSenha;
 
 import javax.validation.Valid;
 
@@ -12,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acolher.api.domain.Usuario;
+import com.acolher.api.dto.AlterarSenha;
 import com.acolher.api.service.UsuarioService;
 
 @RestController
@@ -78,14 +77,15 @@ public class UsuarioResource {
 		return ResponseEntity.ok().build();
 	}
 	
-	@DeleteMapping("/{codigo}")
-	public ResponseEntity<?>delete(@PathVariable(name="codigo") Integer codigo){
-		log.debug("Request to delete by id : {}", codigo);
+	@PutMapping(path = "/desativar")
+	public ResponseEntity<?>delete(@RequestBody Usuario usuario){
+		log.debug("Request to desativar :{}", usuario);
 		
-		if (this.usuarioService.getById(codigo) == null) {
+		if (this.usuarioService.getById(usuario.getCodigo()) == null) {
 			return ResponseEntity.notFound().build();
 		}
-		this.usuarioService.delete(codigo);
+		usuario.setAtivo(false);
+		this.usuarioService.desativarConta(usuario);
 		return ResponseEntity.ok().build();
 	}
 	

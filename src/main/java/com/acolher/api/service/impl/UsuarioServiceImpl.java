@@ -46,10 +46,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void delete(Integer codigo) {
-		log.debug("delete endereco {} " , codigo);
+	public void desativarConta(Usuario usuario) {
+		log.debug("desativar Conta {} " , usuario);
 		
-		this.usuarioRepository.deleteById(codigo);
+		this.usuarioRepository.save(usuario);
 	}
 	@Override
 	public Usuario getByCpf(String cpf){

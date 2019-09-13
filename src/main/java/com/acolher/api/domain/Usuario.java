@@ -2,7 +2,6 @@ package com.acolher.api.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,7 +45,7 @@ public class Usuario implements Serializable {
 	private String password;
 	
 	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
 	@JoinColumn(name = "codigo_endereco", referencedColumnName = "codigo")
     private Endereco endereco;
 
