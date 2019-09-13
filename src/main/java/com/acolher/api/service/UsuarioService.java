@@ -11,6 +11,7 @@ public interface UsuarioService {
 	public Usuario save(Usuario usuario);
 	public void desativarConta(Usuario usuario);
 	public Usuario getByCpf(String cpf);
+	public Usuario getByEmail(String email);
 	public Optional<Usuario> findByCodigoAndPassword(Integer codigo, String password);
 	
 }

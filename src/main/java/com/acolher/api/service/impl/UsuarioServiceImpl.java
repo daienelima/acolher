@@ -48,14 +48,22 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public void desativarConta(Usuario usuario) {
 		log.debug("desativar Conta {} " , usuario);
-		
+  
 		this.usuarioRepository.save(usuario);
 	}
+  
 	@Override
 	public Usuario getByCpf(String cpf){
-		log.debug("Instituicao getByCPF: {} " , cpf);
+		log.debug("Usuario getByCPF: {} " , cpf);
 
 		return this.usuarioRepository.findByCpf(cpf);
+		
+	}
+	@Override
+	public Usuario getByEmail(String email){
+		log.debug("Usuario findByEmail: {} " , email);
+
+		return this.usuarioRepository.getByEmail(email);
 		
 	}
 	
