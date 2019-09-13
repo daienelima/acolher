@@ -45,10 +45,10 @@ public class InstituicaoServiceImpl implements InstituicaoService {
 	}
 
 	@Override
-	public void delete(Integer codigo) {
-		log.debug("delete Instituicao: {} " , codigo);
+	public void desativarConta(Instituicao instituicao) {
+		log.debug("desativar Instituicao: {} " , instituicao);
 		
-		this.instituicaoRepository.deleteById(codigo);
+		this.instituicaoRepository.save(instituicao);
 	}
 
 	public Instituicao getByCnpj(String cnpj){

@@ -10,7 +10,7 @@ public interface InstituicaoService {
 	public Optional<Instituicao> getById(Integer codigo);
 	public List<Instituicao> list();
 	public Instituicao save(Instituicao instituicao);
-	public void delete (Integer codigo);
+	public void desativarConta (Instituicao instituicao);
 	public Instituicao getByCnpj(String cnpj);
 	public Instituicao getByEmail(String email);
 	public Optional<Instituicao> findByCodigoAndSenha(Integer codigo, String senha);
