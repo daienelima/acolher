@@ -1,1 +1,0 @@
-web: java -Dserver.port=$PORT -Dspring.procfiles.active=prod $JAVA_OPTS -jar target/acolher*.jar
