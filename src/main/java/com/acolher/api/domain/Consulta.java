@@ -1,7 +1,6 @@
 package com.acolher.api.domain;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity(name = "consulta")
 public class Consulta implements Serializable{
@@ -30,7 +30,8 @@ public class Consulta implements Serializable{
 	
 	@NotNull
 	@Column(name = "data", nullable = false)
-	private LocalDateTime data;
+	@Size(min = 8, max = 8)
+	private String data;
 	
 	@NotNull
 	@Column(name = "hora", nullable = false)
@@ -58,18 +59,6 @@ public class Consulta implements Serializable{
 	private Status statusConsulta;
 	
 	public Consulta() {}
-	
-	public Consulta(Integer codigo, @NotNull LocalDateTime data, @NotNull String hora, @NotNull Endereco endereco,
-			Usuario profissional, Instituicao instituicao, Usuario paciente, @NotNull Status statusConsulta) {
-		this.codigo = codigo;
-		this.data = data;
-		this.hora = hora;
-		this.endereco = endereco;
-		this.profissional = profissional;
-		this.instituicao = instituicao;
-		this.paciente = paciente;
-		this.statusConsulta = statusConsulta;
-	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -79,11 +68,11 @@ public class Consulta implements Serializable{
 		this.codigo = codigo;
 	}
 
-	public LocalDateTime getData() {
+	public String getData() {
 		return data;
 	}
 
-	public void setData(LocalDateTime data) {
+	public void setData(String data) {
 		this.data = data;
 	}
 
@@ -134,5 +123,5 @@ public class Consulta implements Serializable{
 	public void setStatusConsulta(Status statusConsulta) {
 		this.statusConsulta = statusConsulta;
 	}
-
+	
 }
