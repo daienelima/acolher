@@ -17,26 +17,21 @@ import javax.validation.constraints.Size;
 @Entity(name = "usuario")
 public class Usuario implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4473912353020291828L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "codigo", nullable = false)
 	private Integer codigo;
-	
-	@NotEmpty(message = "Nome Completo é obrigatório")
-	@Column(name = "nomeCompleto", nullable = false)
-	private String nomeCompleto;
 
+	@NotEmpty(message = "Nome Completo é obrigatório")
+	@Column(name = "nome_completo", nullable = false)
+	private String nome_completo;
 
 	@NotEmpty(message = "Data de nascimento é obrigatório")
-	@Column(name = "dtNascimento", nullable = false)
+	@Column(name = "data_nascimento", nullable = false)
 	@NotNull
-	private String dtNascimento;
-
+	private String data_nascimento;
 
 	@NotEmpty(message = "Email é obrigatório")
 	@NotNull
@@ -48,24 +43,23 @@ public class Usuario implements Serializable {
 	@Size(min = 4)
 	@Column(name = "password", nullable = false)
 	private String password;
-	
+
 	@NotNull
 	@OneToOne
 	@JoinColumn(name = "codigo_endereco", referencedColumnName = "codigo")
-    private Endereco endereco;
-
+	private Endereco endereco;
 
 	@NotEmpty(message = "Telefone é obrigatório")
 	@NotNull
 	@Size(min = 10, max = 11)
 	@Column(name = "telefone", nullable = false)
 	private String telefone;
-	
+
 	@NotNull
 	@Size(min = 11, max = 11)
 	@Column(name = "cpf", nullable = false)
 	private String cpf;
-	
+
 	@NotNull
 	@Column(name = "CRM_CRP")
 	private String crm_crp;
@@ -73,7 +67,23 @@ public class Usuario implements Serializable {
 	@NotNull
 	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
-	
+
+	public Usuario() {
+	}
+
+	public Usuario(Integer codigo, String nome_completo, String data_nascimento, String email, Endereco endereco,
+			String telefone, String password, String cpf, String crm_crp, Boolean ativo) {
+		this.codigo = codigo;
+		this.nome_completo = nome_completo;
+		this.data_nascimento = data_nascimento;
+		this.email = email;
+		this.password = password;
+		this.endereco = endereco;
+		this.telefone = telefone;
+		this.cpf = cpf;
+		this.crm_crp = crm_crp;
+		this.ativo = ativo;
+	}
 
 	public Integer getCodigo() {
 		return codigo;
@@ -83,20 +93,20 @@ public class Usuario implements Serializable {
 		this.codigo = codigo;
 	}
 
-	public String getNomeCompleto() {
-		return nomeCompleto;
+	public String getNome_completo() {
+		return nome_completo;
 	}
 
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+	public void setNome_completo(String nome_completo) {
+		this.nome_completo = nome_completo;
 	}
 
-	public String getDtNascimento() {
-		return dtNascimento;
+	public String getData_nascimento() {
+		return data_nascimento;
 	}
 
-	public void setDtNascimento(String dtNascimento) {
-		this.dtNascimento = dtNascimento;
+	public void setData_nascimento(String data_nascimento) {
+		this.data_nascimento = data_nascimento;
 	}
 
 	public String getEmail() {
@@ -155,23 +165,4 @@ public class Usuario implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public Usuario(Integer codigo, @NotNull String nomeCompleto, @NotNull String dtNascimento, @NotNull String email,
-			@NotNull String password, Endereco endereco, @NotNull String telefone, @NotNull String cpf,
-			@NotNull String crm_crp, @NotNull Boolean ativo) {
-		super();
-		this.codigo = codigo;
-		this.nomeCompleto = nomeCompleto;
-		this.dtNascimento = dtNascimento;
-		this.email = email;
-		this.password = password;
-		this.endereco = endereco;
-		this.telefone = telefone;
-		this.cpf = cpf;
-		this.crm_crp = crm_crp;
-		this.ativo = ativo;
-	}
-
-	public Usuario() {
-		super();	
-	}
 }
