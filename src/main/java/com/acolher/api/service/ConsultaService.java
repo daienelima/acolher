@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.acolher.api.domain.Consulta;
+import com.acolher.api.domain.Usuario;
 
 public interface ConsultaService {
 
@@ -13,4 +14,5 @@ public interface ConsultaService {
 	public void cancelarConsulta(Consulta consulta);
 	public void confirmarConsulta(Consulta consulta);
 	public List<Consulta> findConsultasDisponiveis();
+	public Consulta findConsultasByPaciente(Optional<Usuario> usuario);
 }
