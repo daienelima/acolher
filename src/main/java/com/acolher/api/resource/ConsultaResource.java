@@ -110,6 +110,7 @@ public class ConsultaResource {
 	
 	@GetMapping(path = "/disponiveis/{codigo}")
 	public ResponseEntity<?> getAllDisponivelByPaciente(@PathVariable(name = "codigo") Integer id){
+		log.debug("Consultas por ID - ", id);
 		Optional<Usuario> usuario = usuarioService.getById(id);
 		Consulta consulta = this.consultaService.findConsultasByPaciente(usuario);
 		return consulta != null ? ResponseEntity.ok().body(consulta) : ResponseEntity.notFound().build();

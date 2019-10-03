@@ -16,6 +16,6 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Integer>{
 	@Query("SELECT c FROM consulta c WHERE c.statusConsulta = 'DISPONIVEL'")
 	List<Consulta> findAllConcultasDisponiveis();
 	
-	@Query("SELECT c FROM consulta c WHERE c.paciente = ?1 and c.statusConsulta = 'DISPONIVEL'")
+	@Query("SELECT c FROM consulta c WHERE c.paciente = ?1 and c.statusConsulta = 'CONFIRMADA'")
 	Consulta findConsultaDisponivelByPaciente(Optional<Usuario> paciente);
 }
