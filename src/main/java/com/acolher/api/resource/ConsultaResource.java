@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.acolher.api.domain.Consulta;
 import com.acolher.api.domain.Status;
+import com.acolher.api.domain.Usuario;
 import com.acolher.api.service.ConsultaService;
 import com.acolher.api.service.UsuarioService;
 
@@ -42,6 +43,7 @@ public class ConsultaResource {
 		List<Consulta> consultas = this.consultaService.list();
 		return ResponseEntity.ok().body(consultas);
 	}
+	
 
 	@GetMapping("/{codigo}")
 	public ResponseEntity<?> getById(@PathVariable(name = "codigo") Integer codigo) {
@@ -104,5 +106,13 @@ public class ConsultaResource {
 		consulta.setStatusConsulta(Status.CONFIRMADA);
 		this.consultaService.confirmarConsulta(consulta);
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping(path = "/disponiveis/{codigo}")
+	public ResponseEntity<?> getAllDisponivelByPaciente(@PathVariable(name = "codigo") Integer id){
+		log.debug("Consultas por ID - ", id);
+		Optional<Usuario> usuario = usuarioService.getById(id);
+		Consulta consulta = this.consultaService.findConsultasByPaciente(usuario);
+		return consulta != null ? ResponseEntity.ok().body(consulta) : ResponseEntity.notFound().build();
 	}
 }

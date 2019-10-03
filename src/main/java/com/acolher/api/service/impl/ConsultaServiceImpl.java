@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acolher.api.domain.Consulta;
+import com.acolher.api.domain.Usuario;
 import com.acolher.api.repository.ConsultaRepository;
 import com.acolher.api.service.ConsultaService;
 
@@ -63,6 +64,12 @@ public class ConsultaServiceImpl implements ConsultaService{
 		log.debug("List Consultas Disponiveis");
 		
 		return this.consultaRepository.findAllConcultasDisponiveis();
+	}
+
+	@Override
+	public Consulta findConsultasByPaciente(Optional<Usuario> paciente) {
+		log.debug("List Consultas por Paciente");
+		return this.consultaRepository.findConsultaDisponivelByPaciente(paciente);
 	}
 	
 }
