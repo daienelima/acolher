@@ -115,4 +115,35 @@ public class ConsultaResource {
 		Consulta consulta = this.consultaService.findConsultasByPaciente(usuario);
 		return consulta != null ? ResponseEntity.ok().body(consulta) : ResponseEntity.notFound().build();
 	}
+	
+	@GetMapping("/paciente/{codigo}")
+	public ResponseEntity<?> getByPaciente(@PathVariable(name = "codigo") Integer codigo) {
+		log.debug("Request List Consulta por Paciente");
+		Usuario u = new Usuario();
+		u.setCodigo(codigo);
+		List<Consulta> consultas = this.consultaService.findConsultasPorPaciente(u);
+		return ResponseEntity.ok().body(consultas);
+	}
+	
+	@GetMapping("/voluntario/{codigo}")
+	public ResponseEntity<?> getByVoluntario(@PathVariable(name = "codigo") Integer codigo) {
+		log.debug("Request List Consulta por Voluntario");
+		Usuario u = new Usuario();
+		u.setCodigo(codigo);
+		List<Consulta> consultas = this.consultaService.findConsultasPorVoluntario(u);
+		return ResponseEntity.ok().body(consultas);
+	}
+	
+	@PutMapping(path = "/cancelarpaciente")
+	public ResponseEntity<?> cancelarConsultaPaciente(@RequestBody Consulta consulta) {
+		log.debug("Request to cancelar Consulta by id : {}", consulta);
+		
+		if (this.consultaService.getById(consulta.getCodigo()) == null) {
+			return ResponseEntity.notFound().build();
+		}
+		consulta.setStatusConsulta(Status.DISPONIVEL);
+		consulta.setPaciente(null);
+		this.consultaService.cancelarConsultaPaciente(consulta);
+		return ResponseEntity.ok().build();
+	}
 }

@@ -51,6 +51,13 @@ public class ConsultaServiceImpl implements ConsultaService{
 		
 		this.consultaRepository.save(consulta);
 	}
+	
+	@Override
+	public void cancelarConsultaPaciente(Consulta consulta) {
+		log.debug("cancelar Consulta {} " , consulta);
+		
+		this.consultaRepository.save(consulta);
+	}
 
 	@Override
 	public void confirmarConsulta(Consulta consulta) {
@@ -72,4 +79,16 @@ public class ConsultaServiceImpl implements ConsultaService{
 		return this.consultaRepository.findConsultaDisponivelByPaciente(paciente);
 	}
 	
+	@Override
+	public List<Consulta> findConsultasPorPaciente(Usuario u) {
+		log.debug("List Consultas Disponiveis");
+		
+		return this.consultaRepository.findAllConcultasPorPaciente(u);
+	}
+	@Override
+	public List<Consulta> findConsultasPorVoluntario(Usuario u) {
+		log.debug("List Consultas Disponiveis");
+		
+		return this.consultaRepository.findAllConcultasPorVoluntario(u);
+	}
 }
