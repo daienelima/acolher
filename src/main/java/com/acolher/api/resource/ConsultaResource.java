@@ -137,12 +137,10 @@ public class ConsultaResource {
 	@PutMapping(path = "/cancelarpaciente")
 	public ResponseEntity<?> cancelarConsultaPaciente(@RequestBody Consulta consulta) {
 		log.debug("Request to cancelar Consulta by id : {}", consulta);
-		System.out.println("chegou aq");
 		
 		if (this.consultaService.getById(consulta.getCodigo()) == null) {
 			return ResponseEntity.notFound().build();
 		}
-		System.out.println("Cancelar Paciente Codigo:" + consulta.getCodigo());
 		consulta.setStatusConsulta(Status.DISPONIVEL);
 		consulta.setPaciente(null);
 		this.consultaService.cancelarConsultaPaciente(consulta);
