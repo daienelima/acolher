@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.acolher.api.domain.Usuario;
 import com.acolher.api.dto.AlterarSenha;
+import com.acolher.api.dto.Login;
 import com.acolher.api.service.UsuarioService;
 
 @RestController
@@ -42,7 +43,7 @@ public class UsuarioResource {
 		return ResponseEntity.ok().body(usuarios);
 	}
 	
-	@RequestMapping(value = "/codigo/{codigo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{codigo}", method = RequestMethod.GET)
 	public ResponseEntity<?>getById(@PathVariable(name="codigo") Integer codigo){
 		log.debug("Requst Usuario by Id: {}", codigo);
 	
@@ -50,6 +51,7 @@ public class UsuarioResource {
 		
 		return  usuario!= null ?  ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();
 	}
+	
 	@RequestMapping(value = "/cpf/{cpf}", method = RequestMethod.GET)
 	public ResponseEntity<?>getByCpf(@PathVariable(name="cpf") String cpf){
 		log.debug("Requst Usuario by cpf: {}", cpf);
@@ -58,6 +60,7 @@ public class UsuarioResource {
 		
 		return  usuario!= null ?  ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();
 	}
+	
 	@RequestMapping(value = "/email/{email}", method = RequestMethod.GET)
 	public ResponseEntity<?>getByEmail(@PathVariable(name="email") String email){
 		log.debug("Requst Usuario by Id: {}", email);
@@ -130,6 +133,16 @@ public class UsuarioResource {
 		this.usuarioService.save(usuario.get());
 		return ResponseEntity.ok().build();
 
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<?>login(@RequestBody Login login){
+		log.debug("Request to login");
+		
+		Optional<Usuario> usuario = this.usuarioService.findByEmailAndPassword(login.getEmail(), login.getSenha());
+		
+		return usuario.isPresent() ? ResponseEntity.ok().body(usuario) : ResponseEntity.status(HttpStatus.FORBIDDEN).body("Login inválido");
+		
 	}
 	
 	

@@ -14,5 +14,6 @@ public interface InstituicaoService {
 	public Instituicao getByCnpj(String cnpj);
 	public Instituicao getByEmail(String email);
 	public Optional<Instituicao> findByCodigoAndSenha(Integer codigo, String senha);
+	public Optional<Instituicao> findByEmailAndSenha(String email, String senha);
 	
 }
