@@ -69,9 +69,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	
 	@Override
 	public Optional<Usuario> findByCodigoAndPassword(Integer codigo, String password) {
-		log.debug("String getBysenha: {} " , password);
+		log.debug("String getBysenha: {} " , codigo + "; " + password);
 
 		return this.usuarioRepository.findByCodigoAndPassword(codigo,password);
+	}
+	
+	@Override
+	public Optional<Usuario> findByEmailAndPassword(String email, String password) {
+		log.debug("String findByEmailAndPassword: {} " , email + "; " + password);
+		
+		return this.usuarioRepository.findByEmailAndPassword(email,password);
 	}
 
 }
