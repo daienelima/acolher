@@ -13,5 +13,6 @@ public interface UsuarioService {
 	public Usuario getByCpf(String cpf);
 	public Usuario getByEmail(String email);
 	public Optional<Usuario> findByCodigoAndPassword(Integer codigo, String password);
+	public Optional<Usuario> findByEmailAndPassword(String email, String password);
 	
 }

@@ -13,4 +13,5 @@ public interface InstituicaoRepository extends JpaRepository<Instituicao, Intege
 	Instituicao findByCnpj(String cnpj); 
 	Instituicao findByEmail(String email); 
 	Optional<Instituicao> findByCodigoAndSenha(Integer codigo, String senha);
+	Optional<Instituicao> findByEmailAndSenha(String email, String senha);
 }
