@@ -91,4 +91,11 @@ public class ConsultaServiceImpl implements ConsultaService{
 		
 		return this.consultaRepository.findAllConcultasPorVoluntario(u);
 	}
+
+	@Override
+	public void deletar(Integer codigo) {
+		log.debug("Deletar Consultas");
+		
+		this.consultaRepository.deleteById(codigo);
+	}
 }
