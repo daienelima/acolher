@@ -155,7 +155,7 @@ public class ConsultaResource {
 		if (this.consultaService.getById(codigo) == null) {
 			return ResponseEntity.notFound().build();
 		}
-		this.consultaService.deletar(codigo);
+		this.consultaService.delete(codigo);
 		return ResponseEntity.ok().build();
 	}
 }

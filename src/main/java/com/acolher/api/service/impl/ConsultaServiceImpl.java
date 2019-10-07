@@ -93,7 +93,7 @@ public class ConsultaServiceImpl implements ConsultaService{
 	}
 
 	@Override
-	public void deletar(Integer codigo) {
+	public void delete(Integer codigo) {
 		log.debug("Deletar Consultas");
 		
 		this.consultaRepository.deleteById(codigo);
