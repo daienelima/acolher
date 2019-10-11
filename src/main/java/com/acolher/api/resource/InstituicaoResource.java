@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.acolher.api.domain.Instituicao;
 import com.acolher.api.dto.AlterarSenha;
+import com.acolher.api.dto.Login;
 import com.acolher.api.service.InstituicaoService;
 
 @RestController
@@ -116,5 +118,13 @@ public class InstituicaoResource {
 	
 	}
 	
-	
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ResponseEntity<?>login(@RequestBody Login login){
+		log.debug("Request to login");
+		
+		Optional<Instituicao> instituicao = this.instituicaoService.findByEmailAndSenha(login.getEmail(), login.getSenha());
+		
+		return instituicao.isPresent() ? ResponseEntity.ok().body(instituicao) : ResponseEntity.status(HttpStatus.FORBIDDEN).body("Login inválido");
+		
+	}
 }

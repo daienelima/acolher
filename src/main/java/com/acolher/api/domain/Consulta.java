@@ -30,7 +30,7 @@ public class Consulta implements Serializable{
 	
 	@NotNull
 	@Column(name = "data", nullable = false)
-	@Size(min = 8, max = 8)
+	@Size(min = 10, max = 10)
 	private String data;
 	
 	@NotNull

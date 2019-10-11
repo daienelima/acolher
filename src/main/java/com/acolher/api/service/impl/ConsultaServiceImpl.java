@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.acolher.api.domain.Consulta;
+import com.acolher.api.domain.Usuario;
 import com.acolher.api.repository.ConsultaRepository;
 import com.acolher.api.service.ConsultaService;
 
@@ -50,6 +51,13 @@ public class ConsultaServiceImpl implements ConsultaService{
 		
 		this.consultaRepository.save(consulta);
 	}
+	
+	@Override
+	public void cancelarConsultaPaciente(Consulta consulta) {
+		log.debug("cancelar Consulta {} " , consulta);
+		
+		this.consultaRepository.save(consulta);
+	}
 
 	@Override
 	public void confirmarConsulta(Consulta consulta) {
@@ -64,5 +72,23 @@ public class ConsultaServiceImpl implements ConsultaService{
 		
 		return this.consultaRepository.findAllConcultasDisponiveis();
 	}
+
+	@Override
+	public Consulta findConsultasByPaciente(Optional<Usuario> paciente) {
+		log.debug("List Consultas por Paciente");
+		return this.consultaRepository.findConsultaDisponivelByPaciente(paciente);
+	}
 	
+	@Override
+	public List<Consulta> findConsultasPorPaciente(Usuario u) {
+		log.debug("List Consultas Disponiveis");
+		
+		return this.consultaRepository.findAllConcultasPorPaciente(u);
+	}
+	@Override
+	public List<Consulta> findConsultasPorVoluntario(Usuario u) {
+		log.debug("List Consultas Disponiveis");
+		
+		return this.consultaRepository.findAllConcultasPorVoluntario(u);
+	}
 }
