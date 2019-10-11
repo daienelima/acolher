@@ -12,6 +12,7 @@ public interface UsuarioService {
 	public void desativarConta(Usuario usuario);
 	public Usuario getByCpf(String cpf);
 	public Usuario getByEmail(String email);
+	public void delete(Integer codigo);
 	public Optional<Usuario> findByCodigoAndPassword(Integer codigo, String password);
 	public Optional<Usuario> findByEmailAndPassword(String email, String password);
 	

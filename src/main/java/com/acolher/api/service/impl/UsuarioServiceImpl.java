@@ -81,5 +81,12 @@ public class UsuarioServiceImpl implements UsuarioService{
 		return this.usuarioRepository.findByEmailAndPassword(email,password);
 	}
 
+	@Override
+	public void delete(Integer codigo) {
+		log.debug("Usuario Delete byId");
+		
+		this.usuarioRepository.deleteById(codigo);
+	}
+
 }
 

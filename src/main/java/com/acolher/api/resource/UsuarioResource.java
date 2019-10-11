@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -145,6 +146,16 @@ public class UsuarioResource {
 		
 	}
 	
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<?>delete(@PathVariable(name="codigo") Integer codigo){
+		log.debug("Request to delete by id : {}", codigo);
+		
+		if (this.usuarioService.getById(codigo) == null) {
+			return ResponseEntity.notFound().build();
+		}
+		this.usuarioService.delete(codigo);
+		return ResponseEntity.ok().build();
+	}
 	
 }
 
