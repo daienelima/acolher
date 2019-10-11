@@ -18,4 +18,5 @@ public interface ConsultaService {
 	public Consulta findConsultasByPaciente(Optional<Usuario> usuario);
 	public List<Consulta> findConsultasPorPaciente(Usuario u);
 	public List<Consulta> findConsultasPorVoluntario(Usuario u);
+	public void delete(Integer codigo);
 }
