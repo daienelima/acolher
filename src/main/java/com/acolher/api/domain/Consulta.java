@@ -60,6 +60,19 @@ public class Consulta implements Serializable{
 	
 	public Consulta() {}
 
+	public Consulta(Integer codigo, String data, String hora,
+			Endereco endereco, Usuario profissional, Instituicao instituicao, Usuario paciente,
+			Status statusConsulta) {
+		this.codigo = codigo;
+		this.data = data;
+		this.hora = hora;
+		this.endereco = endereco;
+		this.profissional = profissional;
+		this.instituicao = instituicao;
+		this.paciente = paciente;
+		this.statusConsulta = statusConsulta;
+	}
+
 	public Integer getCodigo() {
 		return codigo;
 	}
