@@ -76,6 +76,7 @@ public class ConsultaServiceImpl implements ConsultaService{
 	@Override
 	public Consulta findConsultasByPaciente(Optional<Usuario> paciente) {
 		log.debug("List Consultas por Paciente");
+		
 		return this.consultaRepository.findConsultaDisponivelByPaciente(paciente);
 	}
 	

@@ -1,5 +1,6 @@
 package com.acolher.api.service.impl;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,7 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.acolher.api.domain.Consulta;
 import com.acolher.api.domain.Instituicao;
+import com.acolher.api.repository.ConsultaRepository;
 import com.acolher.api.repository.InstituicaoRepository;
 import com.acolher.api.service.InstituicaoService;
 
@@ -18,9 +21,11 @@ public class InstituicaoServiceImpl implements InstituicaoService {
 
 	private final Logger log = LoggerFactory.getLogger(InstituicaoServiceImpl.class);
 	private final InstituicaoRepository instituicaoRepository;
-		
-	public InstituicaoServiceImpl(InstituicaoRepository instituicaoRepository) {
+	private final ConsultaRepository consultaRepository;
+
+	public InstituicaoServiceImpl(InstituicaoRepository instituicaoRepository, ConsultaRepository consultaRepository) {
 		this.instituicaoRepository = instituicaoRepository;
+		this.consultaRepository = consultaRepository;
 	}
 
 	@Override
@@ -77,5 +82,18 @@ public class InstituicaoServiceImpl implements InstituicaoService {
 		log.debug("String findByEmailAndSenha: {} " , email + "; " + senha);
 		
 		return this.instituicaoRepository.findByEmailAndSenha(email, senha);
+	}
+
+	@Override
+	public void delete(Integer codigo) {
+		log.debug("delete instituicao {} " , codigo);
+		
+		List<Consulta> consultas = this.consultaRepository.findAllConsultaByCodigoInstituicao(codigo);
+		if(consultas.size() > 0) {
+			throw new InvalidParameterException("Instituição não pode ser excluida pois existe consultas ativas");
+		}
+		
+		this.instituicaoRepository.deleteById(codigo);
+		
 	}
 }

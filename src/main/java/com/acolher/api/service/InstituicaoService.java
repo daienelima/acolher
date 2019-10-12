@@ -15,5 +15,5 @@ public interface InstituicaoService {
 	public Instituicao getByEmail(String email);
 	public Optional<Instituicao> findByCodigoAndSenha(Integer codigo, String senha);
 	public Optional<Instituicao> findByEmailAndSenha(String email, String senha);
-	
+	public void delete(Integer codigo);
 }

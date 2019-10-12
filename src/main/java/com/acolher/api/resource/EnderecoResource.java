@@ -2,6 +2,7 @@ package com.acolher.api.resource;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,9 @@ public class EnderecoResource {
 	@GetMapping()
 	public ResponseEntity<?> get(){
 		log.debug("Request List Enderecos");
+		
 		List<Endereco> enderecos = this.enderecoService.list();
+		
 		return ResponseEntity.ok().body(enderecos);
 	}
 	
@@ -73,12 +76,15 @@ public class EnderecoResource {
 	public ResponseEntity<?>delete(@PathVariable(name="codigo") Integer codigo){
 		log.debug("Request to delete by id : {}", codigo);
 		
-		if (this.enderecoService.getById(codigo) == null) {
-			return ResponseEntity.notFound().build();
+		try {
+			if (this.enderecoService.getById(codigo) == null) {
+				return ResponseEntity.notFound().build();
+			}
+			this.enderecoService.delete(codigo);
+		} catch (InvalidParameterException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		this.enderecoService.delete(codigo);
 		return ResponseEntity.ok().build();
 	}
-	
 	
 }

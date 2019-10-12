@@ -41,7 +41,9 @@ public class ConsultaResource {
 	@GetMapping()
 	public ResponseEntity<?> get() {
 		log.debug("Request List Consulta");
+		
 		List<Consulta> consultas = this.consultaService.list();
+		
 		return ResponseEntity.ok().body(consultas);
 	}
 	
@@ -91,6 +93,7 @@ public class ConsultaResource {
 	@GetMapping(path = "/disponiveis")
 	public ResponseEntity<?> getAllDisponivel() {
 		log.debug("Request List Consulta Disponiveis");
+		
 		List<Consulta> consultas = this.consultaService.findConsultasDisponiveis();
 		
 		return ResponseEntity.ok().body(consultas);
@@ -106,32 +109,39 @@ public class ConsultaResource {
 		}
 		consulta.setStatusConsulta(Status.CONFIRMADA);
 		this.consultaService.confirmarConsulta(consulta);
+		
 		return ResponseEntity.ok().build();
 	}
 	
 	@GetMapping(path = "/disponiveis/{codigo}")
 	public ResponseEntity<?> getAllDisponivelByPaciente(@PathVariable(name = "codigo") Integer id){
 		log.debug("Consultas por ID - ", id);
+		
 		Optional<Usuario> usuario = usuarioService.getById(id);
 		Consulta consulta = this.consultaService.findConsultasByPaciente(usuario);
+		
 		return consulta != null ? ResponseEntity.ok().body(consulta) : ResponseEntity.notFound().build();
 	}
 	
 	@GetMapping("/paciente/{codigo}")
 	public ResponseEntity<?> getByPaciente(@PathVariable(name = "codigo") Integer codigo) {
 		log.debug("Request List Consulta por Paciente");
+		
 		Usuario u = new Usuario();
 		u.setCodigo(codigo);
 		List<Consulta> consultas = this.consultaService.findConsultasPorPaciente(u);
+		
 		return ResponseEntity.ok().body(consultas);
 	}
 	
 	@GetMapping("/voluntario/{codigo}")
 	public ResponseEntity<?> getByVoluntario(@PathVariable(name = "codigo") Integer codigo) {
 		log.debug("Request List Consulta por Voluntario");
+		
 		Usuario u = new Usuario();
 		u.setCodigo(codigo);
 		List<Consulta> consultas = this.consultaService.findConsultasPorVoluntario(u);
+		
 		return ResponseEntity.ok().body(consultas);
 	}
 	
