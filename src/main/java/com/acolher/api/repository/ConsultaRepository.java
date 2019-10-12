@@ -24,4 +24,13 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Integer>{
 	
 	@Query("SELECT c FROM consulta c WHERE c.profissional = ?1")
 	List<Consulta> findAllConcultasPorVoluntario(Usuario u);
+	
+	@Query(value = "select * from consulta c where c.codigo_paciente = ?1", nativeQuery = true)
+	List<Consulta> findAllConsultaByCodigoPaciente(Integer codigo_paciente);
+	
+	@Query(value = "select * from consulta c where c.codigo_profissional = ?1", nativeQuery = true)
+	List<Consulta> findAllConsultaByCodigoProficional(Integer codigo_profissional);
+	
+	@Query(value = "select * from consulta c where c.codigo_instituicao = ?1", nativeQuery = true)
+	List<Consulta> findAllConsultaByCodigoInstituicao(Integer codigo_instituicao);
 }

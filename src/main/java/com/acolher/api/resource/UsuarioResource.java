@@ -40,7 +40,9 @@ public class UsuarioResource {
 	@GetMapping()
 	public ResponseEntity<?> get(){
 		log.debug("Request List Usuarios");
+		
 		List<Usuario> usuarios = this.usuarioService.list();
+		
 		return ResponseEntity.ok().body(usuarios);
 	}
 	
@@ -100,6 +102,7 @@ public class UsuarioResource {
 			return ResponseEntity.notFound().build();
 		} 
 		this.usuarioService.save(usuario);
+		
 		return ResponseEntity.ok().build();
 	}
 	
@@ -112,6 +115,7 @@ public class UsuarioResource {
 		}
 		usuario.setAtivo(false);
 		this.usuarioService.desativarConta(usuario);
+		
 		return ResponseEntity.ok().build();
 	}
 	
@@ -150,10 +154,15 @@ public class UsuarioResource {
 	public ResponseEntity<?>delete(@PathVariable(name="codigo") Integer codigo){
 		log.debug("Request to delete by id : {}", codigo);
 		
-		if (this.usuarioService.getById(codigo) == null) {
-			return ResponseEntity.notFound().build();
+		try {
+			if (this.usuarioService.getById(codigo) == null) {
+				return ResponseEntity.notFound().build();
+			}
+			this.usuarioService.delete(codigo);
+			
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
-		this.usuarioService.delete(codigo);
 		return ResponseEntity.ok().build();
 	}
 	

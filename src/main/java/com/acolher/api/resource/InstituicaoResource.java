@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,9 @@ public class InstituicaoResource {
 	@GetMapping()
 	public ResponseEntity<?> get(){
 		log.debug("Request List Instituicoes");
+		
 		List<Instituicao> instituicoes = this.instituicaoService.list();
+		
 		return ResponseEntity.ok().body(instituicoes);
 	}
 	
@@ -126,5 +129,21 @@ public class InstituicaoResource {
 		
 		return instituicao.isPresent() ? ResponseEntity.ok().body(instituicao) : ResponseEntity.status(HttpStatus.FORBIDDEN).body("Login inválido");
 		
+	}
+	
+	@DeleteMapping("/{codigo}")
+	public ResponseEntity<?>delete(@PathVariable(name="codigo") Integer codigo){
+		log.debug("Request to delete by id : {}", codigo);
+		
+		try {
+			if (this.instituicaoService.getById(codigo) == null) {
+				return ResponseEntity.notFound().build();
+			}
+			this.instituicaoService.delete(codigo);
+			
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+		return ResponseEntity.ok().build();
 	}
 }
