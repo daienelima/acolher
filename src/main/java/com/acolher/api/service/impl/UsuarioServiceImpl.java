@@ -53,14 +53,15 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public void desativarConta(Usuario usuario) {
 		log.debug("desativar Conta {} " , usuario);
-  
+		
+		consultaDisponivelPorUsuario(usuario.getCodigo());
 		this.usuarioRepository.save(usuario);
 	}
   
 	@Override
 	public Usuario getByCpf(String cpf){
 		log.debug("Usuario getByCPF: {} " , cpf);
-
+		
 		return this.usuarioRepository.findByCpf(cpf);
 		
 	}
@@ -69,7 +70,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 		log.debug("Usuario findByEmail: {} " , email);
 
 		return this.usuarioRepository.getByEmail(email);
-		
 	}
 	
 	@Override
@@ -90,6 +90,16 @@ public class UsuarioServiceImpl implements UsuarioService{
 	public void delete(Integer codigo) {
 		log.debug("Usuario Delete byId");
 
+		consultaDisponivelPorUsuario(codigo);
+		this.usuarioRepository.deleteById(codigo);
+	}
+
+	/**
+	 * Verificar se existe consultas com o status disponivel ou confirmada para usaurio ou paciente
+	 * se o retorno for maior que 0 nao permitir a remoção ou desativação da conta
+	 * @param codigo
+	 */
+	private void consultaDisponivelPorUsuario(Integer codigo) {
 		List<Consulta> consultasProfissional = this.consultaRepository.findAllConsultaByCodigoProficional(codigo);
 		List<Consulta> consultasPaciente = this.consultaRepository.findAllConsultaByCodigoPaciente(codigo);
 		Optional<Usuario> usuario = this.usuarioRepository.findById(codigo);
@@ -98,15 +108,10 @@ public class UsuarioServiceImpl implements UsuarioService{
 			if(consultasProfissional.size() > 0) {
 				throw new InvalidParameterException("Profissional não pode ser deletado pois existe agendamento de consultas ativo");
 			}
-
 			if(consultasPaciente.size() > 0) {
 				throw new InvalidParameterException("Paciente não pode ser deletado pois existe agendamento de consulta ativo");
 			}
-			
 		}
-		
-		this.usuarioRepository.deleteById(codigo);
 	}
-
 }
 
