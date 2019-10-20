@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.acolher.api.domain.Consulta;
 import com.acolher.api.domain.Usuario;
+import com.acolher.api.domain.Instituicao;
 import com.acolher.api.repository.ConsultaRepository;
 import com.acolher.api.service.ConsultaService;
 
@@ -86,11 +87,19 @@ public class ConsultaServiceImpl implements ConsultaService{
 		
 		return this.consultaRepository.findAllConcultasPorPaciente(u);
 	}
+	
 	@Override
 	public List<Consulta> findConsultasPorVoluntario(Usuario u) {
 		log.debug("List Consultas Disponiveis");
 		
 		return this.consultaRepository.findAllConcultasPorVoluntario(u);
+	}
+	
+	@Override
+	public List<Consulta> findConsultasPorInstituicao(Instituicao i) {
+		log.debug("List Consultas Disponiveis");
+		
+		return this.consultaRepository.findAllConsultasPorInstituicao(i);
 	}
 
 	@Override

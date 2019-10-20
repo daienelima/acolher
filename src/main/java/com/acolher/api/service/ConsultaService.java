@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.acolher.api.domain.Consulta;
 import com.acolher.api.domain.Usuario;
+import com.acolher.api.domain.Instituicao;
 
 public interface ConsultaService {
 
@@ -18,5 +19,6 @@ public interface ConsultaService {
 	public Consulta findConsultasByPaciente(Optional<Usuario> usuario);
 	public List<Consulta> findConsultasPorPaciente(Usuario u);
 	public List<Consulta> findConsultasPorVoluntario(Usuario u);
+	public List<Consulta> findConsultasPorInstituicao(Instituicao i);
 	public void delete(Integer codigo);
 }
