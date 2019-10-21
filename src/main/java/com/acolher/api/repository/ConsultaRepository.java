@@ -39,4 +39,17 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Integer>{
 	@Query(value = "select * from consulta c where status = 'DISPONIVEL' or status = 'CONFIRMADA' and c.codigo_instituicao = ?1", nativeQuery = true)
 	List<Consulta> findAllConsultaByCodigoInstituicao(Integer codigo_instituicao);
 	
+	@Query(value = "SELECT * FROM consulta WHERE codigo_profissional = ?1 AND status IN ('DISPONIVEL', 'CONFIRMADA') " + 
+			"AND STR_TO_DATE(data,'%d/%m/%Y') >= STR_TO_DATE(?2,'%d/%m/%Y')" +
+			"AND STR_TO_DATE((SELECT replace(hora,':','')), '%H %i') " +
+			"BETWEEN SUBTIME(STR_TO_DATE((SELECT replace(?3,':','')), '%H %i'), '01:00:00') AND " + 
+			"ADDTIME(STR_TO_DATE((SELECT replace(?3,':','')), '%H %i'), '01:00:00')", nativeQuery = true)
+	List<Consulta> findConsultasFuturasByCodigoProfissional(Integer codigo_profissional, String data, String hora);
+	
+	@Query(value = "SELECT * FROM consulta WHERE codigo_instituicao = ?1 AND status IN ('DISPONIVEL', 'CONFIRMADA') " + 
+			"AND STR_TO_DATE(data,'%d/%m/%Y') >= STR_TO_DATE(?2,'%d/%m/%Y') " + 
+			"AND STR_TO_DATE((SELECT replace(hora,':','')), '%H %i') " + 
+			"BETWEEN SUBTIME(STR_TO_DATE((SELECT replace(?3,':','')), '%H %i'), '01:00:00') AND " + 
+			"ADDTIME(STR_TO_DATE((SELECT replace(?3,':','')), '%H %i'), '01:00:00')", nativeQuery = true)
+	List<Consulta> findConsultasFuturasByCodigoInstituicao(Integer codigo_instituicao, String data, String hora);
 }

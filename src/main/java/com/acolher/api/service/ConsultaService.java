@@ -21,4 +21,6 @@ public interface ConsultaService {
 	public List<Consulta> findConsultasPorVoluntario(Usuario u);
 	public List<Consulta> findConsultasPorInstituicao(Instituicao i);
 	public void delete(Integer codigo);
+	public List<Consulta> findConsultasFuturasByCodigoProfissional(Integer codigoProfissional, String data, String hora);
+	public List<Consulta> findConsultasFuturasByCodigoInstituicao(Integer codigoInstituicao, String data, String hora);
 }

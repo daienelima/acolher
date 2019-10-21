@@ -108,4 +108,18 @@ public class ConsultaServiceImpl implements ConsultaService{
 		
 		this.consultaRepository.deleteById(codigo);
 	}
+	
+	@Override
+	public List<Consulta> findConsultasFuturasByCodigoProfissional(Integer codigoProfissional, String data, String hora) {
+		log.debug("Listar consultas futuras por profissional");
+		
+		return this.consultaRepository.findConsultasFuturasByCodigoProfissional(codigoProfissional, data, hora);
+	}
+	
+	@Override
+	public List<Consulta> findConsultasFuturasByCodigoInstituicao(Integer codigoInstituicao, String data, String hora) {
+		log.debug("Listar consultas futuras por instituicao");
+		
+		return this.consultaRepository.findConsultasFuturasByCodigoInstituicao(codigoInstituicao, data, hora);
+	}
 }

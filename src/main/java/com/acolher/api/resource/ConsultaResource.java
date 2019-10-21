@@ -2,6 +2,10 @@ package com.acolher.api.resource;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +13,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +66,32 @@ public class ConsultaResource {
 	@PostMapping()
 	public ResponseEntity<?> save(@Valid @RequestBody Consulta consulta) throws URISyntaxException {
 		log.debug("Request to save Consulta : {}", consulta);
+		
+		GregorianCalendar gc = new GregorianCalendar();
+        gc.setTime(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 
+        if(consulta.getData().equals(sdf.format(gc.getTime()))){
+            SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
+            int horaAtual = Integer.valueOf(sdfH.format(gc.getTime()).replace(":", ""));
+            int horaConsulta = Integer.valueOf(consulta.getHora().replace(":", ""));
+            if (horaConsulta <= horaAtual){
+            	return ResponseEntity.status(HttpStatus.CONFLICT).body("Não é possível agendar consultas para a data e hora atual ou retroativa");
+            }
+        }
+        
+		List<Consulta> consultas = new ArrayList<Consulta>();
+		
+		if(consulta.getInstituicao() == null) {
+			consultas = this.consultaService.findConsultasFuturasByCodigoProfissional(consulta.getProfissional().getCodigo(), consulta.getData(), consulta.getHora());
+		}else {
+			consultas = this.consultaService.findConsultasFuturasByCodigoInstituicao(consulta.getInstituicao().getCodigo(), consulta.getData(), consulta.getHora());			
+		}
+		
+		if (consultas.size() > 0) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Não é possível agendar consultas em intervalo inferior a 1h de consultas já agendadas");
+		}
+		
 		consulta.setStatusConsulta(Status.DISPONIVEL);
 		Consulta consultaSalva = this.consultaService.save(consulta);
 		
