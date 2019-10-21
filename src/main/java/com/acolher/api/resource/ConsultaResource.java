@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.acolher.api.domain.Consulta;
 import com.acolher.api.domain.Status;
 import com.acolher.api.domain.Usuario;
+import com.acolher.api.domain.Instituicao;
 import com.acolher.api.service.ConsultaService;
 import com.acolher.api.service.UsuarioService;
 
@@ -141,6 +142,17 @@ public class ConsultaResource {
 		Usuario u = new Usuario();
 		u.setCodigo(codigo);
 		List<Consulta> consultas = this.consultaService.findConsultasPorVoluntario(u);
+		
+		return ResponseEntity.ok().body(consultas);
+	}
+	
+	@GetMapping("/instituicao/{codigo}")
+	public ResponseEntity<?> getByInstituicao(@PathVariable(name = "codigo") Integer codigo) {
+		log.debug("Request List Consulta por Instituicao");
+		
+		Instituicao i = new Instituicao();
+		i.setCodigo(codigo);
+		List<Consulta> consultas = this.consultaService.findConsultasPorInstituicao(i);
 		
 		return ResponseEntity.ok().body(consultas);
 	}
