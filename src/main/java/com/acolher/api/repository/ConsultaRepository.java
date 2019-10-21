@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.acolher.api.domain.Consulta;
 import com.acolher.api.domain.Usuario;
+import com.acolher.api.domain.Instituicao;
+
 
 @Repository 
 public interface ConsultaRepository extends JpaRepository<Consulta, Integer>{
@@ -24,6 +26,9 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Integer>{
 	
 	@Query("SELECT c FROM consulta c WHERE c.profissional = ?1")
 	List<Consulta> findAllConcultasPorVoluntario(Usuario u);
+	
+	@Query("SELECT c FROM consulta c WHERE c.instituicao = ?1")
+	List<Consulta> findAllConsultasPorInstituicao(Instituicao i);
 	
 	@Query(value = "select * from consulta c where status = 'DISPONIVEL' or status = 'CONFIRMADA' and c.codigo_paciente = ?1", nativeQuery = true)
 	List<Consulta> findAllConsultaByCodigoPaciente(Integer codigo_paciente);
