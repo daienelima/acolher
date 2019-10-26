@@ -144,6 +144,20 @@ public class ConsultaResource {
 		return ResponseEntity.ok().build();
 	}
 	
+	@PutMapping(path = "/confirmarRealizacao")
+	public ResponseEntity<?> confirmarRealizacaoConsulta(@RequestBody Consulta consulta) {
+		log.debug("Confirmar Realização da Consulta: {}", consulta);
+		
+		if (this.consultaService.getById(consulta.getCodigo()) == null
+				|| this.usuarioService.getById(consulta.getPaciente().getCodigo()) == null) {
+			return ResponseEntity.notFound().build();
+		}
+		consulta.setStatusConsulta(Status.REALIZADA);
+		this.consultaService.confirmarRealizacaoConsulta(consulta);
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	@GetMapping(path = "/disponiveis/{codigo}")
 	public ResponseEntity<?> getAllDisponivelByPaciente(@PathVariable(name = "codigo") Integer id){
 		log.debug("Consultas por ID - ", id);
