@@ -54,6 +54,13 @@ public class ConsultaServiceImpl implements ConsultaService{
 	}
 	
 	@Override
+	public void confirmarRealizacaoConsulta(Consulta consulta) {
+		log.debug("Confirmar Realização da Consulta {} " , consulta);
+		
+		this.consultaRepository.save(consulta);
+	}
+	
+	@Override
 	public void cancelarConsultaPaciente(Consulta consulta) {
 		log.debug("cancelar Consulta {} " , consulta);
 		
