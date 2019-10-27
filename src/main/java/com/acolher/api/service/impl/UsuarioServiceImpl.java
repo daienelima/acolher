@@ -100,16 +100,21 @@ public class UsuarioServiceImpl implements UsuarioService{
 	 * @param codigo
 	 */
 	private void consultaDisponivelPorUsuario(Integer codigo) {
-		List<Consulta> consultasProfissional = this.consultaRepository.findAllConsultaByCodigoProficional(codigo);
-		List<Consulta> consultasPaciente = this.consultaRepository.findAllConsultaByCodigoPaciente(codigo);
+		
 		Optional<Usuario> usuario = this.usuarioRepository.findById(codigo);
-
+		
 		if(usuario.isPresent()) {
-			if(consultasProfissional.size() > 0) {
-				throw new InvalidParameterException("Profissional não pode ser deletado pois existe agendamento de consultas ativo");
-			}
-			if(consultasPaciente.size() > 0) {
-				throw new InvalidParameterException("Paciente não pode ser deletado pois existe agendamento de consulta ativo");
+			if(usuario.get().getCrm_crp().equals("")) {
+				System.out.println("CRP := " + usuario.get().getCrm_crp());
+				List<Consulta> consultasPaciente= this.consultaRepository.findAllConsultaByCodigoPaciente(codigo);
+				if(consultasPaciente.size() > 0) {
+					throw new InvalidParameterException("Paciente não pode ser deletado ou desativado pois existe agendamento de consulta ativo");
+				}
+			}else {
+				List<Consulta> consultasProfissional = this.consultaRepository.findAllConsultaByCodigoProficional(codigo);	
+				if(consultasProfissional.size() > 0) {
+					throw new InvalidParameterException("Profissional não pode ser deletado ou desativado pois existe agendamento de consultas ativo");
+				}
 			}
 		}
 	}
