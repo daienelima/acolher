@@ -15,6 +15,7 @@ public interface ConsultaService {
 	public void cancelarConsulta(Consulta consulta);
 	public void cancelarConsultaPaciente(Consulta consulta);
 	public void confirmarConsulta(Consulta consulta);
+	public void confirmarRealizacaoConsulta(Consulta consulta);
 	public List<Consulta> findConsultasDisponiveis();
 	public Consulta findConsultasByPaciente(Optional<Usuario> usuario);
 	public List<Consulta> findConsultasPorPaciente(Usuario u);
