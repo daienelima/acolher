@@ -105,7 +105,6 @@ public class UsuarioServiceImpl implements UsuarioService{
 		
 		if(usuario.isPresent()) {
 			if(usuario.get().getCrm_crp().equals("")) {
-				System.out.println("CRP := " + usuario.get().getCrm_crp());
 				List<Consulta> consultasPaciente= this.consultaRepository.findAllConsultaByCodigoPaciente(codigo);
 				if(consultasPaciente.size() > 0) {
 					throw new InvalidParameterException("Paciente não pode ser deletado ou desativado pois existe agendamento de consulta ativo");
