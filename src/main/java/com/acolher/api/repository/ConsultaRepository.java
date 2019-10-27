@@ -30,13 +30,13 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Integer>{
 	@Query("SELECT c FROM consulta c WHERE c.instituicao = ?1")
 	List<Consulta> findAllConsultasPorInstituicao(Instituicao i);
 	
-	@Query(value = "select * from consulta c where status = 'DISPONIVEL' or status = 'CONFIRMADA' and c.codigo_paciente = ?1", nativeQuery = true)
+	@Query(value = "select * from consulta c where (status = 'DISPONIVEL' or status = 'CONFIRMADA') and c.codigo_paciente = ?1", nativeQuery = true)
 	List<Consulta> findAllConsultaByCodigoPaciente(Integer codigo_paciente);
 	
-	@Query(value = "select * from consulta c where status = 'DISPONIVEL' or status = 'CONFIRMADA' and c.codigo_profissional = ?1", nativeQuery = true)
+	@Query(value = "select * from consulta c where (status = 'DISPONIVEL' or status = 'CONFIRMADA') and c.codigo_profissional = ?1", nativeQuery = true)
 	List<Consulta> findAllConsultaByCodigoProficional(Integer codigo_profissional);
 	
-	@Query(value = "select * from consulta c where status = 'DISPONIVEL' or status = 'CONFIRMADA' and c.codigo_instituicao = ?1", nativeQuery = true)
+	@Query(value = "select * from consulta c where (status = 'DISPONIVEL' or status = 'CONFIRMADA') and c.codigo_instituicao = ?1", nativeQuery = true)
 	List<Consulta> findAllConsultaByCodigoInstituicao(Integer codigo_instituicao);
 	
 	@Query(value = "SELECT * FROM consulta WHERE codigo_profissional = ?1 AND status IN ('DISPONIVEL', 'CONFIRMADA') " + 
