@@ -87,4 +87,11 @@ public class EnderecoResource {
 		return ResponseEntity.ok().build();
 	}
 	
+	@GetMapping(path = "/getByParameters")
+	public ResponseEntity<?>getByParameter(@RequestBody Endereco endereco){
+		log.debug("Request to get Endereco by parameters : {}", endereco);
+		Endereco address = this.enderecoService.getAddressByParameters(endereco);
+		return ResponseEntity.ok().body(address);
+	}
+	
 }

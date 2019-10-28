@@ -66,5 +66,12 @@ public class EnderecoServiceImpl implements EnderecoService{
 		
 		this.enderecoRepository.deleteById(codigo);
 	}
+	
+	@Override
+	public Endereco getAddressByParameters(Endereco endereco) {
+		log.debug("get endereco por parametros {} " , endereco);
+		
+		return this.enderecoRepository.findAddressByParameters(endereco.getCEP(), endereco.getUF(), endereco.getBairro(), endereco.getCidade(), endereco.getLogradouro(), endereco.getNumero());
+	}
 
 }
