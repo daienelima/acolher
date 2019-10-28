@@ -107,18 +107,18 @@ public class UsuarioResource {
 
 		return ResponseEntity.ok().build();
 	}
-
-	@PutMapping(path = "/desativar")
-	public ResponseEntity<?>delete(@RequestBody Usuario usuario){
-		log.debug("Request to desativar :{}", usuario);
-
+	
+	@RequestMapping(value = "/desativar/{codigo}", method = RequestMethod.GET)
+	public ResponseEntity<?>desativar(@PathVariable(name="codigo") Integer codigo){
+		log.debug("Request to desativar :{}", codigo);
+		Optional<Usuario> usuario = this.usuarioService.getById(codigo);
 		try {
-
-			if (this.usuarioService.getById(usuario.getCodigo()) == null) {
+			
+			if (!usuario.isPresent()) {
 				return ResponseEntity.notFound().build();
 			}
-			usuario.setAtivo(false);
-			this.usuarioService.desativarConta(usuario);
+			usuario.get().setAtivo(false);
+			this.usuarioService.desativarConta(usuario.get());
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
