@@ -11,5 +11,5 @@ public interface EnderecoService {
 	public List<Endereco> list();
 	public Endereco save(Endereco endereco);
 	public void delete(Integer codigo);
-	
+	public Endereco getAddressByParameters(Endereco endereco);
 }
