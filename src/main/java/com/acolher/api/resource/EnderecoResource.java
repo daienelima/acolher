@@ -87,11 +87,13 @@ public class EnderecoResource {
 		return ResponseEntity.ok().build();
 	}
 	
-	@GetMapping(path = "/getByParameters")
-	public ResponseEntity<?>getByParameter(@RequestBody Endereco endereco){
+	@PostMapping(path = "/getByParameters")
+	public ResponseEntity<?>getByParameter(@RequestBody Endereco endereco) throws URISyntaxException{
 		log.debug("Request to get Endereco by parameters : {}", endereco);
 		Endereco address = this.enderecoService.getAddressByParameters(endereco);
-		return ResponseEntity.ok().body(address);
+		
+		return address != null ? ResponseEntity.ok().body(address) : ResponseEntity.notFound().build();
+				
 	}
 	
 }
