@@ -89,15 +89,16 @@ public class InstituicaoResource {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PutMapping(path = "/desativar")
-	public ResponseEntity<?>delete(@RequestBody Instituicao instituicao){
-		log.debug("Request to desativar  : {}", instituicao);
+	@RequestMapping(value = "/desativar/{codigo}", method = RequestMethod.GET)
+	public ResponseEntity<?>desativar(@PathVariable(name="codigo") Integer codigo){
+		log.debug("Request to desativar  : {}", codigo);
 		
-		if (this.instituicaoService.getById(instituicao.getCodigo()) == null) {
+		Optional<Instituicao> instituicao = this.instituicaoService.getById(codigo);
+		if (!instituicao.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
-		instituicao.setAtivo(false);
-		this.instituicaoService.desativarConta(instituicao);
+		instituicao.get().setAtivo(false);
+		this.instituicaoService.desativarConta(instituicao.get());
 		return ResponseEntity.ok().build();
 	}
 	
