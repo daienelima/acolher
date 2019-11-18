@@ -226,5 +226,14 @@ public class ConsultaResource {
 		this.consultaService.delete(codigo);
 		return ResponseEntity.ok().build();
 	}
+	
+	@GetMapping("/regiao/{regiao}")
+	public ResponseEntity<?> getByRegiao(@PathVariable(name = "regiao") String regiao){
+		log.debug("Get By regiao");
+		
+		List<Consulta> consultas = this.consultaService.findConsultasPorRegiao(regiao);
+		return ResponseEntity.ok().body(consultas);
+	}
+	
 }
 
