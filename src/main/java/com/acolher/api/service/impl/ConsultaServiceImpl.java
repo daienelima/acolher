@@ -129,4 +129,10 @@ public class ConsultaServiceImpl implements ConsultaService{
 		
 		return this.consultaRepository.findConsultasFuturasByCodigoInstituicao(codigoInstituicao, data, hora);
 	}
+	
+	@Override
+	public List<Consulta> findConsultasPorRegiao(String regiao){
+		log.debug("Listando consulta por região");
+		return this.consultaRepository.findConsultasPorRegiao(regiao);
+	}
 }
