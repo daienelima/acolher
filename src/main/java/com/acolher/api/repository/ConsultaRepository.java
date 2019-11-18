@@ -52,4 +52,8 @@ public interface ConsultaRepository extends JpaRepository<Consulta, Integer>{
 			"BETWEEN SUBTIME(STR_TO_DATE((SELECT replace(?3,':','')), '%H %i'), '01:00:00') AND " + 
 			"ADDTIME(STR_TO_DATE((SELECT replace(?3,':','')), '%H %i'), '01:00:00')", nativeQuery = true)
 	List<Consulta> findConsultasFuturasByCodigoInstituicao(Integer codigo_instituicao, String data, String hora);
+	
+	@Query(value = "SELECT * FROM consulta WHERE codigo_endereco IN (SELECT codigo FROM endereco WHERE cidade = ?1)", nativeQuery = true)
+	List<Consulta> findConsultasPorRegiao(String regiao);
+	
 }
