@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 import javax.validation.Valid;
 
@@ -70,11 +71,13 @@ public class ConsultaResource {
 		log.debug("Request to save Consulta : {}", consulta);
 		
 		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTimeZone(TimeZone.getTimeZone("GMT-03:00"));
         gc.setTime(new Date());
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/YYYY");
 
         if(consulta.getData().equals(sdf.format(gc.getTime()))){
             SimpleDateFormat sdfH = new SimpleDateFormat("HH:mm");
+            sdfH.setTimeZone(TimeZone.getTimeZone("GMT-03:00"));
             int horaAtual = Integer.valueOf(sdfH.format(gc.getTime()).replace(":", ""));
             int horaConsulta = Integer.valueOf(consulta.getHora().replace(":", ""));
             if (horaConsulta <= horaAtual){
